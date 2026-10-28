@@ -17,7 +17,13 @@ terraform -chdir=projects/memis-cloud/infra test
 
 On Windows, replace `python3` with `py -3`, and `.venv/bin/python` with `.venv\Scripts\python.exe`. Terraform commands stay the same. Mock tests use the Terraform test framework with a mocked AWS provider: their apply phases manipulate local mock state, not AWS resources. A mocked pass is not a successful real apply.
 
-The provider lock file records the selected provider and checksums. The AMI lookup resolves the latest AL2023 ARM64 image during a real plan, and bootstrap selects the current AL2023 package release. Review and record both for a real rollout; an immutable image pipeline is a later operational improvement.
+The provider lock file records the selected provider and verified checksums for macOS ARM64 and Linux AMD64. After a provider upgrade, refresh both platforms before committing:
+
+```sh
+terraform -chdir=projects/memis-cloud/infra providers lock -platform=darwin_arm64 -platform=linux_amd64
+```
+
+CI uses a read-only lock file and retains checksum enforcement. The AMI lookup resolves the latest AL2023 ARM64 image during a real plan, and bootstrap selects the current AL2023 package release. Review and record both for a real rollout; an immutable image pipeline is a later operational improvement.
 
 ## Supply real deployment values
 Copy `infra/terraform.tfvars.example` to `infra/terraform.tfvars`. Replace the example hosted-zone ID. Confirm the zone is public and owns the chosen domain. Check existing DNS and CloudFront aliases, overlapping address ranges, account-local AZ aliases, RDS PostgreSQL 17/class availability, and VPC-origin quotas and permissions.

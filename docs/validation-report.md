@@ -33,4 +33,4 @@ Early mock experiments exposed computed-ID and dynamic-key limitations. The fina
 
 Every live infrastructure check starts as not_run in the [live checklist](../projects/memis-cloud/artifacts/live-checklist.yaml). The [Copilot compatibility record](copilot-compatibility.md) identifies interactive gaps. The passing reviews concern the local architecture/configuration/documentation package, not live deployment success.
 
-GitHub Actions is configured for Python 3.11/3.14 and Terraform 1.15.5 on Ubuntu. Hosted workflow results are visible in the repository's Actions tab after publication and are separate from this local record.
+GitHub Actions runs Python 3.11/3.14 and Terraform 1.15.5 on Ubuntu. Both Python jobs passed in the first hosted run. That run exposed a Linux installed-package checksum missing from the Mac-created provider lock file. Verified HashiCorp-signed checksums were subsequently added with `terraform providers lock -platform=darwin_arm64 -platform=linux_amd64`; checksum enforcement and read-only CI initialization remain enabled. The repository's Actions tab records the subsequent complete workflow results.

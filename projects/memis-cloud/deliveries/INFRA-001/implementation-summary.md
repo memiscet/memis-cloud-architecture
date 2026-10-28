@@ -19,3 +19,6 @@ Plan version 2 reflects mocked configuration verification rather than a claim ab
 
 ## Remaining work
 Live AWS plan, deployment/runtime verification, and interactive Copilot verification were not run. See the live checklist and compatibility record; their absence is not represented as a runtime pass.
+
+## Hosted validation correction
+The first hosted Python jobs passed. Terraform validation on Linux exposed a missing platform package checksum. Obtained verified HashiCorp-signed checksums for darwin_arm64 and linux_amd64 using terraform providers lock; retained read-only CI initialization and checksum enforcement. Revalidated the unchanged provider configuration locally.
