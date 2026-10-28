@@ -1,0 +1,92 @@
+schema_version: '1.0'
+deliverable_id: COPILOT-001
+plan_version: '1'
+source_deliverable:
+  title: Expose the reusable workflow to GitHub Copilot
+  deliverable_description: As a contributor, I want discoverable skills, explicit prompts, and a tutorial,
+    so that I can continue the same file-based workflow in Copilot.
+  acceptance_criteria:
+  - id: COPILOT-001-AC1
+    given: Canonical and generated skills exist
+    when: The synchronization checker runs
+    then: All seven generated skills match; a changed copy is rejected.
+    type: negative
+  - id: COPILOT-001-AC2
+    given: A user chooses any of the seven workflow stages
+    when: They inspect its prompt
+    then: The prompt references the correct skill and requires an explicit project and, for delivery stages,
+      a deliverable ID.
+    type: positive
+  - id: COPILOT-001-AC3
+    given: Interactive Copilot is unavailable
+    when: The contributor reads compatibility documentation
+    then: Static checks and unperformed interactive tests are distinguished, and a manual discovery walkthrough
+      is provided.
+    type: edge_case
+tasks:
+- id: COPILOT-001-T1
+  description: Add Copilot discovery, explicit stage prompts, scoped instructions, and synchronization checks.
+  done_when: python scripts/sync_copilot.py --check, integration tests, and repository checks pass; inspect
+    tutorial and unverified compatibility record.
+  dependencies: []
+  artifacts_affected:
+  - action: create
+    path: .github/copilot-instructions.md
+  - action: create
+    path: scripts/sync_copilot.py
+  - action: create
+    path: scripts/check_copilot.py
+  - action: create
+    path: scripts/verify_workspace.py
+  - action: create
+    path: tests/test_workspace.py
+  - action: create
+    path: tutorials/04-copilot-memis-cloud.md
+  - action: create
+    path: tutorials/05-reuse-this-workspace.md
+  - action: create
+    path: docs/copilot-compatibility.md
+  - action: create
+    path: .github/skills/create-scope/SKILL.md
+  - action: create
+    path: .github/skills/create-architecture/SKILL.md
+  - action: create
+    path: .github/skills/create-ux/SKILL.md
+  - action: create
+    path: .github/skills/decompose-to-deliverables/SKILL.md
+  - action: create
+    path: .github/skills/plan-deliverable/SKILL.md
+  - action: create
+    path: .github/skills/create-deliverable/SKILL.md
+  - action: create
+    path: .github/skills/review-deliverable/SKILL.md
+  - action: create
+    path: .github/prompts/scope.prompt.md
+  - action: create
+    path: .github/prompts/architecture.prompt.md
+  - action: create
+    path: .github/prompts/experience.prompt.md
+  - action: create
+    path: .github/prompts/decompose.prompt.md
+  - action: create
+    path: .github/prompts/plan.prompt.md
+  - action: create
+    path: .github/prompts/create.prompt.md
+  - action: create
+    path: .github/prompts/review.prompt.md
+  - action: create
+    path: .github/instructions/infrastructure.instructions.md
+  - action: create
+    path: .github/instructions/documentation.instructions.md
+  - action: create
+    path: .github/instructions/artifacts.instructions.md
+  risks:
+  - Generated skills can drift from canonical files.
+  - Supported customization features vary by Copilot client.
+  acceptance_criteria_refs:
+  - COPILOT-001-AC1
+  - COPILOT-001-AC2
+  - COPILOT-001-AC3
+assumptions:
+- This plan delivers reviewed files and local evidence, not a running AWS deployment.
+open_questions: []

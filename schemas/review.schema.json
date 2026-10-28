@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Delivery framework review v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "deliverable_id",
+    "reviewed_at",
+    "plan_digest",
+    "verdict",
+    "issues",
+    "ac_assessment",
+    "summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "deliverable_id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}$"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "plan_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "verdict": {
+      "enum": [
+        "passed",
+        "failed",
+        "changes_requested"
+      ]
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "severity",
+          "category",
+          "description",
+          "recommendation",
+          "ac_ref"
+        ],
+        "properties": {
+          "severity": {
+            "enum": [
+              "blocker",
+              "major",
+              "minor",
+              "nit"
+            ]
+          },
+          "category": {
+            "enum": [
+              "correctness",
+              "edge_case",
+              "readability",
+              "test_coverage",
+              "ac_violation"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "recommendation": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "ac_ref": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      },
+      "minItems": 0
+    },
+    "ac_assessment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ac_id",
+          "status",
+          "evidence",
+          "notes"
+        ],
+        "properties": {
+          "ac_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}-AC[1-9][0-9]*$"
+          },
+          "status": {
+            "enum": [
+              "satisfied",
+              "not_satisfied",
+              "partially_satisfied",
+              "not_verified"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "method",
+                "result",
+                "detail"
+              ],
+              "properties": {
+                "method": {
+                  "enum": [
+                    "automated_test",
+                    "manual_check",
+                    "document_inspection"
+                  ]
+                },
+                "result": {
+                  "enum": [
+                    "passed",
+                    "failed",
+                    "not_run"
+                  ]
+                },
+                "detail": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                }
+              }
+            },
+            "minItems": 1
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    }
+  }
+}

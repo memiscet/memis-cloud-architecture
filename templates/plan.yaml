@@ -1,0 +1,27 @@
+# Copy to deliveries/WORK-001/plan.yaml inside the project.
+# Replace the complete source_deliverable with the current deliverable's promise.
+schema_version: "1.0"
+deliverable_id: "WORK-001"
+plan_version: "1"
+source_deliverable:
+  title: "Name one useful result"
+  deliverable_description: "As a person using this result, I want a capability, so that I gain a benefit."
+  acceptance_criteria:
+    - id: "WORK-001-AC1"
+      given: "Describe a starting situation"
+      when: "Describe an action or event"
+      then: "Describe an observable result"
+      type: "positive"
+tasks:
+  - id: "WORK-001-T1"
+    description: "Create the agreed result using the project's chosen approach."
+    done_when: "Name a specific inspection or test and its expected observation."
+    dependencies: []
+    artifacts_affected:
+      - action: "create"
+        path: "artifacts/result.md"
+    risks:
+      - "Replace with a concrete uncertainty, or use an empty list if none is relevant."
+    acceptance_criteria_refs: ["WORK-001-AC1"]
+assumptions: []
+open_questions: []

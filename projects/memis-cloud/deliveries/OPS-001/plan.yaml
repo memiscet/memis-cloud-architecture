@@ -1,0 +1,45 @@
+schema_version: '1.0'
+deliverable_id: OPS-001
+plan_version: '1'
+source_deliverable:
+  title: Document setup and safe operational recovery
+  deliverable_description: As an operator, I want explicit setup and diagnostic steps, so that I can validate
+    and maintain the proposed service without mistaking file checks for deployment.
+  acceptance_criteria:
+  - id: OPS-001-AC1
+    given: The operator has no deployment values yet
+    when: They read the setup guide
+    then: Required inputs, local commands, real-plan steps, and DNS cutover are distinguished.
+    type: positive
+  - id: OPS-001-AC2
+    given: A service, network, or bootstrap check fails
+    when: They use the operations guide
+    then: Each listed failure has a diagnostic path and a recovery action, including the single-instance limit.
+    type: negative
+  - id: OPS-001-AC3
+    given: No live environment has been provisioned
+    when: The operator reads the live checklist
+    then: Every live test begins not_run and includes a method and expected observation.
+    type: edge_case
+tasks:
+- id: OPS-001-T1
+  description: Write setup, maintenance, recovery, and unrun live checks.
+  done_when: Inspect commands and failure cases; python scripts/verify_workspace.py checks local links.
+  dependencies: []
+  artifacts_affected:
+  - action: create
+    path: docs/setup.md
+  - action: create
+    path: docs/operations.md
+  - action: create
+    path: artifacts/live-checklist.yaml
+  risks:
+  - A green health endpoint cannot prove DB or S3 readiness.
+  - An example hosted-zone ID must not be mistaken for a confirmed deployment input.
+  acceptance_criteria_refs:
+  - OPS-001-AC1
+  - OPS-001-AC2
+  - OPS-001-AC3
+assumptions:
+- This plan delivers reviewed files and local evidence, not a running AWS deployment.
+open_questions: []

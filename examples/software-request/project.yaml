@@ -1,0 +1,7 @@
+schema_version: '1.0'
+id: software-request
+name: Support request priority
+kind: software
+owner: Example support tools team
+verification:
+- Run python -m unittest discover -s tests -v inside this project after implementation.

@@ -1,0 +1,14 @@
+vpc_cidr: "10.64.0.0/20"
+subnets:
+  a:
+    public_cidr: "10.64.0.0/24"
+    private_cidr: "10.64.8.0/24"
+    private_role: "Nginx and ALB"
+  b:
+    public_cidr: "10.64.1.0/24"
+    private_cidr: "10.64.9.0/24"
+    private_role: "RDS subnet group and ALB"
+  c:
+    public_cidr: "10.64.2.0/24"
+    private_cidr: "10.64.10.0/24"
+    private_role: "RDS subnet group and ALB"

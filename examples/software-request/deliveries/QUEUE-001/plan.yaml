@@ -1,0 +1,53 @@
+schema_version: '1.0'
+deliverable_id: QUEUE-001
+plan_version: '1'
+source_deliverable:
+  title: Order support requests by priority
+  deliverable_description: As a support coordinator, I want urgent requests before normal requests while
+    retaining arrival order within each priority, so that I can work through the queue predictably.
+  acceptance_criteria:
+  - id: QUEUE-001-AC1
+    given: Valid records contain both urgent and normal priorities
+    when: They are prioritized
+    then: Urgent IDs precede normal IDs and arrival order is preserved within each priority; the input
+      is unchanged.
+    type: positive
+  - id: QUEUE-001-AC2
+    given: A record contains a priority outside urgent and normal
+    when: It is prioritized
+    then: ValueError is raised and no partial result is returned.
+    type: negative
+  - id: QUEUE-001-AC3
+    given: There are no request records
+    when: They are prioritized
+    then: The returned ID list is empty.
+    type: edge_case
+  - id: QUEUE-001-AC4
+    given: Two records have the same ID, or an ID is missing or blank
+    when: They are prioritized
+    then: ValueError is raised and no partial result is returned.
+    type: negative
+tasks:
+- id: QUEUE-001-T1
+  description: Create a pure function that validates records, rejects invalid priorities and IDs, and
+    returns a stable priority ordering without mutating input.
+  done_when: python -m unittest discover -s tests -v passes tests/test_priority.py covering mixed priorities,
+    stable ties, unchanged input, invalid priorities, missing or blank IDs, duplicate IDs, and empty input.
+  dependencies: []
+  artifacts_affected:
+  - action: create
+    path: src/priority.py
+  - action: create
+    path: tests/test_priority.py
+  risks:
+  - A naive sort may reorder ties, losing arrival order.
+  - Validation after sorting could return a partial result for invalid input.
+  - Sorting the original list in place would alter the caller state.
+  acceptance_criteria_refs:
+  - QUEUE-001-AC1
+  - QUEUE-001-AC2
+  - QUEUE-001-AC3
+  - QUEUE-001-AC4
+assumptions:
+- Input sequence represents arrival order.
+open_questions: []

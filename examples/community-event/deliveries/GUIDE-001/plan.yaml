@@ -1,0 +1,45 @@
+schema_version: '1.0'
+deliverable_id: GUIDE-001
+plan_version: '1'
+source_deliverable:
+  title: Provide a self-contained welcome guide
+  deliverable_description: As a guest, I want arrival and fallback instructions in a short guide, so that
+    I can find the next step without an internet connection.
+  acceptance_criteria:
+  - id: GUIDE-001-AC1
+    given: A guest reads the guide before arrival
+    when: They read the Arrival section
+    then: The text names Riverside Community Hall, the main entrance, and the welcome desk.
+    type: positive
+  - id: GUIDE-001-AC2
+    given: A guest does not have confirmation details
+    when: They read Missing details
+    then: The text tells them to ask the welcome desk and not to guess their room.
+    type: negative
+  - id: GUIDE-001-AC3
+    given: A guest uses an outdated printed guide
+    when: They read Room changes
+    then: The text directs them to ask the welcome desk for current directions; essential instructions
+      require no online link.
+    type: edge_case
+tasks:
+- id: GUIDE-001-T1
+  description: Write the four-section guide with explicit arrival and fallback instructions for the fictional
+    venue.
+  done_when: From the framework root, python scripts/check_example.py reports passed for GUIDE-001-AC1,
+    AC2, and AC3.
+  dependencies: []
+  artifacts_affected:
+  - action: create
+    path: artifacts/welcome-guide.md
+  risks:
+  - An outdated printed guide could direct a guest to the wrong room; use the welcome desk as the stable
+    fallback.
+  - A guest without confirmation must receive a useful next step rather than an instruction to guess.
+  acceptance_criteria_refs:
+  - GUIDE-001-AC1
+  - GUIDE-001-AC2
+  - GUIDE-001-AC3
+assumptions:
+- Event information is fictional.
+open_questions: []

@@ -1,0 +1,31 @@
+schema_version: '1.0'
+workstream:
+  name: Copilot workspace integration
+  description: Inspectable configuration and evidence, with deployment status explicit.
+  source_scope: docs/scope.md
+deliverables:
+- id: COPILOT-001
+  title: Expose the reusable workflow to GitHub Copilot
+  deliverable_description: As a contributor, I want discoverable skills, explicit prompts, and a tutorial, so that
+    I can continue the same file-based workflow in Copilot.
+  acceptance_criteria:
+  - id: COPILOT-001-AC1
+    given: Canonical and generated skills exist
+    when: The synchronization checker runs
+    then: All seven generated skills match; a changed copy is rejected.
+    type: negative
+  - id: COPILOT-001-AC2
+    given: A user chooses any of the seven workflow stages
+    when: They inspect its prompt
+    then: The prompt references the correct skill and requires an explicit project and, for delivery stages, a deliverable
+      ID.
+    type: positive
+  - id: COPILOT-001-AC3
+    given: Interactive Copilot is unavailable
+    when: The contributor reads compatibility documentation
+    then: Static checks and unperformed interactive tests are distinguished, and a manual discovery walkthrough
+      is provided.
+    type: edge_case
+  review_status: passed
+  review_notes: 'COPILOT-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict
+    does not claim a live AWS deployment or interactive Copilot verification.'

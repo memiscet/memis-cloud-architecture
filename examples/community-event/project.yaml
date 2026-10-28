@@ -1,0 +1,7 @@
+schema_version: '1.0'
+id: community-event
+name: Fictional community welcome guide
+kind: document
+owner: Example event team
+verification:
+- Run python scripts/check_example.py from the framework root; inspect content only.

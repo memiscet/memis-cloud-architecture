@@ -1,0 +1,8 @@
+schema_version: "1.0"
+id: "workspace-integration"
+name: "Copilot-compatible architecture workspace"
+kind: "Reusable workflow integration"
+owner: "memiscet"
+verification:
+  - "Run python scripts/verify_workspace.py for canonical skills, generated skills, prompts, handoffs, examples, and local links."
+  - "Record interactive Copilot checks as not_run when no interactive client is available."

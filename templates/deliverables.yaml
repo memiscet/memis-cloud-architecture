@@ -1,0 +1,18 @@
+# Copy into a project's deliverables.yaml and replace this example content.
+schema_version: "1.0"
+workstream:
+  name: "Name the workstream"
+  description: "Describe its useful outcome"
+  source_scope: "docs/scope.md"
+deliverables:
+  - id: "WORK-001"
+    title: "Name one useful result"
+    deliverable_description: "As a person using this result, I want a capability, so that I gain a benefit."
+    acceptance_criteria:
+      - id: "WORK-001-AC1"
+        given: "Describe a starting situation"
+        when: "Describe an action or event"
+        then: "Describe an observable result"
+        type: "positive"
+    review_status: "pending"
+    review_notes: ""

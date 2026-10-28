@@ -1,0 +1,42 @@
+schema_version: '1.0'
+review_id: INFRA-001-R1
+deliverable_id: INFRA-001
+reviewed_at: '2026-10-28'
+plan_digest: d23d2bd0ff6e1b1b6264116631a102a2157e238c3df03f765c3445be5e14e495
+verdict: passed
+issues: []
+ac_assessment:
+- ac_id: INFRA-001-AC1
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'terraform test: network_and_private_placement passed using mocked AWS resources; inspected route-table
+      associations and zonal NAT references.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: INFRA-001-AC2
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'terraform test: private_origin_and_tls and explicit_dns_cutover passed; no public EC2 address and origin
+      HTTPS/Host forwarding configured.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: INFRA-001-AC3
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'terraform test: database_and_storage_boundaries and scoped_application_secret passed; database uses
+      B/C, IAM limits object access and denies administrator-secret retrieval.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: INFRA-001-AC4
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'terraform test: reject_duplicate_zones, reject_invalid_name, and reject_unavailable_zone passed with
+      expected failures.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+summary: 'INFRA-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict does
+  not claim a live AWS deployment or interactive Copilot verification.'

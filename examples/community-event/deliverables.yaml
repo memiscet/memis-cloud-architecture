@@ -1,0 +1,31 @@
+schema_version: '1.0'
+workstream:
+  name: Provide a self-contained welcome guide
+  description: As a guest, I want arrival and fallback instructions in a short guide, so that I can find
+    the next step without an internet connection.
+  source_scope: docs/scope.md
+deliverables:
+- id: GUIDE-001
+  title: Provide a self-contained welcome guide
+  deliverable_description: As a guest, I want arrival and fallback instructions in a short guide, so that
+    I can find the next step without an internet connection.
+  acceptance_criteria:
+  - id: GUIDE-001-AC1
+    given: A guest reads the guide before arrival
+    when: They read the Arrival section
+    then: The text names Riverside Community Hall, the main entrance, and the welcome desk.
+    type: positive
+  - id: GUIDE-001-AC2
+    given: A guest does not have confirmation details
+    when: They read Missing details
+    then: The text tells them to ask the welcome desk and not to guess their room.
+    type: negative
+  - id: GUIDE-001-AC3
+    given: A guest uses an outdated printed guide
+    when: They read Room changes
+    then: The text directs them to ask the welcome desk for current directions; essential instructions
+      require no online link.
+    type: edge_case
+  review_status: passed
+  review_notes: All three sample document criteria have passed content checks. This verdict covers the
+    fictional guide only, not a real event.

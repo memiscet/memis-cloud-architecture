@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Delivery framework plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "deliverable_id",
+    "plan_version",
+    "source_deliverable",
+    "tasks",
+    "assumptions",
+    "open_questions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "deliverable_id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}$"
+    },
+    "plan_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "source_deliverable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "deliverable_description",
+        "acceptance_criteria"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "deliverable_description": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "given",
+              "when",
+              "then",
+              "type"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}-AC[1-9][0-9]*$"
+              },
+              "given": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "when": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "then": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "type": {
+                "enum": [
+                  "positive",
+                  "negative",
+                  "edge_case"
+                ]
+              }
+            }
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "description",
+          "done_when",
+          "dependencies",
+          "artifacts_affected",
+          "risks",
+          "acceptance_criteria_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}-T[1-9][0-9]*$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "done_when": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}-T[1-9][0-9]*$"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "artifacts_affected": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "action",
+                "path"
+              ],
+              "properties": {
+                "action": {
+                  "enum": [
+                    "create",
+                    "modify"
+                  ]
+                },
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                }
+              }
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "risks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0
+          },
+          "acceptance_criteria_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}-AC[1-9][0-9]*$"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0
+    }
+  }
+}

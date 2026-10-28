@@ -1,0 +1,48 @@
+schema_version: '1.0'
+deliverable_id: ARCH-001
+plan_version: '1'
+source_deliverable:
+  title: Explain and verify the six-subnet design
+  deliverable_description: As an owner, I want an inspectable architecture with explicit constraints, so that
+    I can assess the private application design.
+  acceptance_criteria:
+  - id: ARCH-001-AC1
+    given: The proposed allocation is available
+    when: A reviewer checks address ranges and roles
+    then: Six non-overlapping subnets fit the VPC, and Nginx and the database use different private subnets.
+    type: positive
+  - id: ARCH-001-AC2
+    given: The diagram and access guide are available
+    when: A reviewer traces requests and maintenance traffic
+    then: DNS resolution is distinct from HTTP forwarding, and inbound CDN, database, NAT, and S3 paths are
+      explained.
+    type: positive
+  - id: ARCH-001-AC3
+    given: An owner asks for fully separated tiers in every AZ
+    when: They read the decisions
+    then: The six-subnet compromise and nine-subnet alternative are explicit, with no unsupported availability
+      guarantee.
+    type: edge_case
+tasks:
+- id: ARCH-001-T1
+  description: Write the address and access reference and machine-readable allocation.
+  done_when: python -m unittest discover -s tests -v passes network allocation checks; inspect all route and
+    access paths.
+  dependencies: []
+  artifacts_affected:
+  - action: modify
+    path: network.yaml
+  - action: create
+    path: docs/network-and-access.md
+  - action: create
+    path: docs/decisions.md
+  risks:
+  - Six subnets cannot supply dedicated application and DB tiers in every AZ.
+  - Address overlap with connected networks needs owner confirmation.
+  acceptance_criteria_refs:
+  - ARCH-001-AC1
+  - ARCH-001-AC2
+  - ARCH-001-AC3
+assumptions:
+- This plan delivers reviewed files and local evidence, not a running AWS deployment.
+open_questions: []

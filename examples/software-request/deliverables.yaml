@@ -1,0 +1,35 @@
+schema_version: '1.0'
+workstream:
+  name: Order support requests by priority
+  description: As a support coordinator, I want urgent requests before normal requests while retaining
+    arrival order within each priority, so that I can work through the queue predictably.
+  source_scope: docs/scope.md
+deliverables:
+- id: QUEUE-001
+  title: Order support requests by priority
+  deliverable_description: As a support coordinator, I want urgent requests before normal requests while
+    retaining arrival order within each priority, so that I can work through the queue predictably.
+  acceptance_criteria:
+  - id: QUEUE-001-AC1
+    given: Valid records contain both urgent and normal priorities
+    when: They are prioritized
+    then: Urgent IDs precede normal IDs and arrival order is preserved within each priority; the input
+      is unchanged.
+    type: positive
+  - id: QUEUE-001-AC2
+    given: A record contains a priority outside urgent and normal
+    when: It is prioritized
+    then: ValueError is raised and no partial result is returned.
+    type: negative
+  - id: QUEUE-001-AC3
+    given: There are no request records
+    when: They are prioritized
+    then: The returned ID list is empty.
+    type: edge_case
+  - id: QUEUE-001-AC4
+    given: Two records have the same ID, or an ID is missing or blank
+    when: They are prioritized
+    then: ValueError is raised and no partial result is returned.
+    type: negative
+  review_status: pending
+  review_notes: ''

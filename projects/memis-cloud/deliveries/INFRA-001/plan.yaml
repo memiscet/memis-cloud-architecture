@@ -1,0 +1,74 @@
+schema_version: '1.0'
+deliverable_id: INFRA-001
+plan_version: '2'
+source_deliverable:
+  title: Provide validated private infrastructure configuration
+  deliverable_description: As an operator, I want reproducible infrastructure configuration and local checks,
+    so that I can inspect a proposed deployment before using an AWS account.
+  acceptance_criteria:
+  - id: INFRA-001-AC1
+    given: Terraform uses the recorded allocation
+    when: Mocked configuration assertions inspect subnets and routing
+    then: Three public and three private subnets have correct zonal NAT and IGW route relationships.
+    type: positive
+  - id: INFRA-001-AC2
+    given: CloudFront and load-balancer configuration is inspected
+    when: Mocked assertions check the origin and access rules
+    then: The origin uses an internal ALB, HTTPS and Host forwarding, and the Nginx instance has no public
+      address.
+    type: positive
+  - id: INFRA-001-AC3
+    given: The database and object-storage configuration is inspected
+    when: Mocked assertions check placement and permissions
+    then: RDS excludes Nginx subnet A, is private and encrypted, and application storage permissions exclude
+      unrelated objects and the administrator secret.
+    type: positive
+  - id: INFRA-001-AC4
+    given: An operator supplies an invalid zone map or resource name
+    when: Mocked input tests validate the configuration
+    then: Invalid input is rejected rather than producing an ambiguous placement or name.
+    type: negative
+tasks:
+- id: INFRA-001-T1
+  description: Implement the documented resource relationships and mocked configuration tests.
+  done_when: terraform fmt -check -recursive, terraform validate, and terraform test all pass in infra/.
+  dependencies: []
+  artifacts_affected:
+  - action: create
+    path: infra/versions.tf
+  - action: create
+    path: infra/variables.tf
+  - action: create
+    path: infra/network.tf
+  - action: create
+    path: infra/security.tf
+  - action: create
+    path: infra/storage.tf
+  - action: create
+    path: infra/compute.tf
+  - action: create
+    path: infra/database.tf
+  - action: create
+    path: infra/edge.tf
+  - action: create
+    path: infra/outputs.tf
+  - action: create
+    path: infra/terraform.tfvars.example
+  - action: create
+    path: infra/user-data.sh.tftpl
+  - action: create
+    path: infra/tests/architecture.tftest.hcl
+  - action: create
+    path: infra/.terraform.lock.hcl
+  risks:
+  - Mocks do not verify AWS quotas, live TLS, regional availability, or bootstrap success.
+  - Default routes must align with the matching zonal NAT.
+  - Host forwarding is required for the selected origin certificate name.
+  acceptance_criteria_refs:
+  - INFRA-001-AC1
+  - INFRA-001-AC2
+  - INFRA-001-AC3
+  - INFRA-001-AC4
+assumptions:
+- This plan delivers reviewed files and local evidence, not a running AWS deployment.
+open_questions: []

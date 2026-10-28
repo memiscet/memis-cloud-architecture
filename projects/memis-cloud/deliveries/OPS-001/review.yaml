@@ -1,0 +1,34 @@
+schema_version: '1.0'
+review_id: OPS-001-R1
+deliverable_id: OPS-001
+reviewed_at: '2026-10-28'
+plan_digest: 0942240a7ccbc830f98e9dd5e540ce6c5116ba4fabc459dfcfdfadb1f6460a2c
+verdict: passed
+issues: []
+ac_assessment:
+- ac_id: OPS-001-AC1
+  status: satisfied
+  evidence:
+  - method: document_inspection
+    result: passed
+    detail: 'Inspected setup.md: placeholder zone ID, account checks, local validation, real plan, apply, and explicit
+      DNS cutover are separated.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: OPS-001-AC2
+  status: satisfied
+  evidence:
+  - method: document_inspection
+    result: passed
+    detail: 'Inspected operations.md: bootstrap, TLS, health, NAT/endpoint, SSM, database, secret, storage failures
+      and recovery actions are documented.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: OPS-001-AC3
+  status: satisfied
+  evidence:
+  - method: document_inspection
+    result: passed
+    detail: 'Inspected artifacts/live-checklist.yaml: twelve checks start not_run, with expected observations and
+      explicit no-deployment reasons.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+summary: 'OPS-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict does not
+  claim a live AWS deployment or interactive Copilot verification.'

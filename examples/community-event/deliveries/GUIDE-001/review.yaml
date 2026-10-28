@@ -1,0 +1,31 @@
+schema_version: '1.0'
+review_id: GUIDE-001-R1
+deliverable_id: GUIDE-001
+reviewed_at: '2026-10-28'
+plan_digest: 49dbae72c37bce2bd6829fd35e010b405c0c1e35bcb9a37b49bf7cbe3fb5a24b
+verdict: passed
+issues: []
+ac_assessment:
+- ac_id: GUIDE-001-AC1
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'python scripts/check_example.py: GUIDE-001-AC1 passed against the included fictional guide.'
+  notes: Limited to the observable text requirement defined in the sample scope.
+- ac_id: GUIDE-001-AC2
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'python scripts/check_example.py: GUIDE-001-AC2 passed against the included fictional guide.'
+  notes: Limited to the observable text requirement defined in the sample scope.
+- ac_id: GUIDE-001-AC3
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'python scripts/check_example.py: GUIDE-001-AC3 passed against the included fictional guide.'
+  notes: Limited to the observable text requirement defined in the sample scope.
+summary: All three sample document criteria have passed content checks. This verdict covers the fictional
+  guide only, not a real event.

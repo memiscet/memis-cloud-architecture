@@ -1,0 +1,81 @@
+schema_version: '1.0'
+workstream:
+  name: memis.cloud architecture package
+  description: Inspectable configuration and evidence, with deployment status explicit.
+  source_scope: docs/scope.md
+deliverables:
+- id: ARCH-001
+  title: Explain and verify the six-subnet design
+  deliverable_description: As an owner, I want an inspectable architecture with explicit constraints, so that I
+    can assess the private application design.
+  acceptance_criteria:
+  - id: ARCH-001-AC1
+    given: The proposed allocation is available
+    when: A reviewer checks address ranges and roles
+    then: Six non-overlapping subnets fit the VPC, and Nginx and the database use different private subnets.
+    type: positive
+  - id: ARCH-001-AC2
+    given: The diagram and access guide are available
+    when: A reviewer traces requests and maintenance traffic
+    then: DNS resolution is distinct from HTTP forwarding, and inbound CDN, database, NAT, and S3 paths are explained.
+    type: positive
+  - id: ARCH-001-AC3
+    given: An owner asks for fully separated tiers in every AZ
+    when: They read the decisions
+    then: The six-subnet compromise and nine-subnet alternative are explicit, with no unsupported availability guarantee.
+    type: edge_case
+  review_status: passed
+  review_notes: 'ARCH-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict
+    does not claim a live AWS deployment or interactive Copilot verification.'
+- id: INFRA-001
+  title: Provide validated private infrastructure configuration
+  deliverable_description: As an operator, I want reproducible infrastructure configuration and local checks, so
+    that I can inspect a proposed deployment before using an AWS account.
+  acceptance_criteria:
+  - id: INFRA-001-AC1
+    given: Terraform uses the recorded allocation
+    when: Mocked configuration assertions inspect subnets and routing
+    then: Three public and three private subnets have correct zonal NAT and IGW route relationships.
+    type: positive
+  - id: INFRA-001-AC2
+    given: CloudFront and load-balancer configuration is inspected
+    when: Mocked assertions check the origin and access rules
+    then: The origin uses an internal ALB, HTTPS and Host forwarding, and the Nginx instance has no public address.
+    type: positive
+  - id: INFRA-001-AC3
+    given: The database and object-storage configuration is inspected
+    when: Mocked assertions check placement and permissions
+    then: RDS excludes Nginx subnet A, is private and encrypted, and application storage permissions exclude unrelated
+      objects and the administrator secret.
+    type: positive
+  - id: INFRA-001-AC4
+    given: An operator supplies an invalid zone map or resource name
+    when: Mocked input tests validate the configuration
+    then: Invalid input is rejected rather than producing an ambiguous placement or name.
+    type: negative
+  review_status: passed
+  review_notes: 'INFRA-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict
+    does not claim a live AWS deployment or interactive Copilot verification.'
+- id: OPS-001
+  title: Document setup and safe operational recovery
+  deliverable_description: As an operator, I want explicit setup and diagnostic steps, so that I can validate and
+    maintain the proposed service without mistaking file checks for deployment.
+  acceptance_criteria:
+  - id: OPS-001-AC1
+    given: The operator has no deployment values yet
+    when: They read the setup guide
+    then: Required inputs, local commands, real-plan steps, and DNS cutover are distinguished.
+    type: positive
+  - id: OPS-001-AC2
+    given: A service, network, or bootstrap check fails
+    when: They use the operations guide
+    then: Each listed failure has a diagnostic path and a recovery action, including the single-instance limit.
+    type: negative
+  - id: OPS-001-AC3
+    given: No live environment has been provisioned
+    when: The operator reads the live checklist
+    then: Every live test begins not_run and includes a method and expected observation.
+    type: edge_case
+  review_status: passed
+  review_notes: 'OPS-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict
+    does not claim a live AWS deployment or interactive Copilot verification.'

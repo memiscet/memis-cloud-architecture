@@ -1,0 +1,34 @@
+schema_version: '1.0'
+review_id: ARCH-001-R1
+deliverable_id: ARCH-001
+reviewed_at: '2026-10-28'
+plan_digest: e31cf19e7ca604f5438f8b3ce5696bcd8af6a047173a45907065e47b725179f5
+verdict: passed
+issues: []
+ac_assessment:
+- ac_id: ARCH-001-AC1
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: 'python -m unittest discover -s tests -v: network allocation tests passed; six /24 ranges are contained
+      and non-overlapping.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: ARCH-001-AC2
+  status: satisfied
+  evidence:
+  - method: document_inspection
+    result: passed
+    detail: 'Inspected architecture.md and network-and-access.md: DNS is separate from HTTP, with CDN, database,
+      S3, and NAT paths distinguished.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: ARCH-001-AC3
+  status: satisfied
+  evidence:
+  - method: document_inspection
+    result: passed
+    detail: 'Inspected decisions.md: six-subnet shared-ALB compromise, nine-subnet alternative, and single-instance
+      availability limit are explicit.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+summary: 'ARCH-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict does not
+  claim a live AWS deployment or interactive Copilot verification.'

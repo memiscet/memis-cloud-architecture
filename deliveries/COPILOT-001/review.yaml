@@ -1,0 +1,34 @@
+schema_version: '1.0'
+review_id: COPILOT-001-R1
+deliverable_id: COPILOT-001
+reviewed_at: '2026-10-28'
+plan_digest: 9a79a772cd585afa9534c63991ceed09bd10ea2e72a5f8f1943e26af66333b95
+verdict: passed
+issues: []
+ac_assessment:
+- ac_id: COPILOT-001-AC1
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: python scripts/sync_copilot.py --check passed; 41-test suite includes stale-copy rejection without repair
+      and canonical regeneration.
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: COPILOT-001-AC2
+  status: satisfied
+  evidence:
+  - method: automated_test
+    result: passed
+    detail: python scripts/check_copilot.py passed seven prompts and references; inspected all prompt bodies for
+      explicit project and delivery-ID selection.
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+- ac_id: COPILOT-001-AC3
+  status: satisfied
+  evidence:
+  - method: document_inspection
+    result: passed
+    detail: 'Inspected docs/copilot-compatibility.md and tutorials/04-copilot-memis-cloud.md: interactive discovery
+      is not_run and the manual workflow is explicit.'
+  notes: Assessment is limited to the configuration/documentation promise; live checks remain separately not_run.
+summary: 'COPILOT-001: local artifact acceptance criteria are satisfied with recorded evidence. This verdict does
+  not claim a live AWS deployment or interactive Copilot verification.'

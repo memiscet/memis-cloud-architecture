@@ -1,0 +1,66 @@
+deployment_status: not_deployed
+checks:
+- id: identity
+  status: not_run
+  method: Confirm aws sts get-caller-identity, public hosted-zone ownership, available AZs, overlap inventory, and
+    current aliases.
+  expected: All deployment assumptions are confirmed by the operator.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: real-plan
+  status: not_run
+  method: Run an account-backed terraform plan and inspect every change.
+  expected: No unexpected resource, DNS replacement, or permission expansion is present.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: private-placement
+  status: not_run
+  method: Inspect EC2, ALB scheme, RDS public flag, and subnet IDs after deployment.
+  expected: No public EC2 IP; internal ALB; private RDS outside Nginx subnet A.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: bootstrap
+  status: not_run
+  method: Use SSM to inspect cloud-init and run nginx -t and curl --fail http://127.0.0.1/healthz.
+  expected: Nginx configuration is valid and /healthz returns ok.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: target-health
+  status: not_run
+  method: Run aws elbv2 describe-target-health using the target-group ARN output.
+  expected: The registered Nginx target is healthy.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: edge-tls
+  status: not_run
+  method: Test HTTPS for memis.cloud through a controlled Host-preserving setup before cutover and again after DNS
+    cutover.
+  expected: Viewer TLS and origin certificate/Host matching succeed; HTTP redirects to HTTPS.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: origin-boundary
+  status: not_run
+  method: Attempt direct ALB access from outside the VPC and from an unauthorized VPC source.
+  expected: The internal origin cannot be reached through an unauthorized path.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: nat-egress
+  status: not_run
+  method: From the instance, request a non-S3 HTTPS site and inspect Private A default route and NAT metrics.
+  expected: The connection succeeds using NAT A; no inbound SSH or public instance address is needed.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: package-access
+  status: not_run
+  method: Inspect dnf repositories, perform an approved update check, and inspect S3 endpoint policy.
+  expected: AL2023 repository reads work through the endpoint; general internet egress remains via NAT.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: s3-permissions
+  status: not_run
+  method: From the instance role, put/get an object under application/ and test a write outside it and a delete.
+  expected: Allowed prefix read/write succeeds; unrelated prefix write and delete are denied; confirm IAM result
+    separately from endpoint policy.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: runtime-db
+  status: not_run
+  method: After implementing the runtime and separate DB user, connect with verified PostgreSQL TLS and test reads/writes
+    and denied excess privileges.
+  expected: Only the intended DB user privileges work; secret rotation and reconnection are verified.
+  reason: No live AWS environment was provisioned for this repository task.
+- id: restore
+  status: not_run
+  method: Perform an isolated database restore and S3 object-version recovery exercise.
+  expected: Restored data is validated and measured recovery observations are recorded without inventing RTO/RPO.
+  reason: No live AWS environment was provisioned for this repository task.

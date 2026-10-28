@@ -1,0 +1,23 @@
+# This is an unfinished review, deliberately requesting changes.
+# Replace plan_digest using the command in docs/file-contracts.md.
+schema_version: "1.0"
+review_id: "WORK-001-R1"
+deliverable_id: "WORK-001"
+reviewed_at: "2026-10-28"
+plan_digest: "0000000000000000000000000000000000000000000000000000000000000000"
+verdict: "changes_requested"
+issues:
+  - severity: "major"
+    category: "test_coverage"
+    description: "The planned verification has not been performed."
+    recommendation: "Perform and record the specific check before judging the criterion."
+    ac_ref: "WORK-001-AC1"
+ac_assessment:
+  - ac_id: "WORK-001-AC1"
+    status: "not_verified"
+    evidence:
+      - method: "manual_check"
+        result: "not_run"
+        detail: "Template only; replace with an actual check or an explanation of the blocker."
+    notes: "No claim of completion is made."
+summary: "Verification is still required before this deliverable can pass."

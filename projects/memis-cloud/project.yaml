@@ -1,0 +1,9 @@
+schema_version: "1.0"
+id: "memis-cloud"
+name: "memis.cloud AWS architecture"
+kind: "Infrastructure architecture and configuration"
+owner: "memiscet"
+verification:
+  - "Validate framework handoffs and Copilot files with python scripts/verify_workspace.py."
+  - "Run Terraform format, validate, and mocked configuration tests in infra/."
+  - "Record real AWS plan, deployment smoke tests, and interactive Copilot checks separately; they are not implied by local validation."

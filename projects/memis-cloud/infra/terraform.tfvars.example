@@ -1,0 +1,12 @@
+# Replace with the EXISTING public zone ID; this is not a real deployment value.
+hosted_zone_id = "Z0000000000000"
+# Leave false until the deployment and existing DNS records have been reviewed.
+publish_dns = false
+availability_zones = {
+  a = "us-east-1a"
+  b = "us-east-1b"
+  c = "us-east-1c"
+}
+# Optional after creating a least-privilege DB user and separate application secret:
+# application_secret_arn = "arn:aws:secretsmanager:us-east-1:123456789012:secret:application-EXAMPLE"
+# application_secret_kms_key_arn = "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000"

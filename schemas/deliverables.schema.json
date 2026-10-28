@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Delivery framework deliverables v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "workstream",
+    "deliverables"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "workstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description",
+        "source_scope"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "source_scope": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      }
+    },
+    "deliverables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "deliverable_description",
+          "acceptance_criteria",
+          "review_status",
+          "review_notes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "deliverable_description": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "acceptance_criteria": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "given",
+                "when",
+                "then",
+                "type"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Z][A-Z0-9]*-[0-9]{3,}-AC[1-9][0-9]*$"
+                },
+                "given": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "when": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "then": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "type": {
+                  "enum": [
+                    "positive",
+                    "negative",
+                    "edge_case"
+                  ]
+                }
+              }
+            },
+            "minItems": 1
+          },
+          "review_status": {
+            "enum": [
+              "pending",
+              "passed",
+              "failed",
+              "changes_requested"
+            ]
+          },
+          "review_notes": {
+            "type": "string"
+          }
+        }
+      },
+      "minItems": 1
+    }
+  }
+}
